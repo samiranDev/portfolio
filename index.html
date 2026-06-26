@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sam — Creative Developer</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800;900&family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/vinnymoreira/stellarnav@master/css/stellarnav.min.css">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -56,10 +57,42 @@ nav.scrolled{
 .nav-left{display:flex;align-items:center;gap:1.5rem}
 .logo{font-size:.78rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;background:linear-gradient(135deg,var(--a1),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 
-.nl{display:flex;gap:2.8rem;list-style:none}
-.nl a{color:var(--muted);text-decoration:none;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;transition:color .3s;position:relative}
-.nl a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--a1);transition:width .3s}
-.nl a:hover{color:var(--text)}.nl a:hover::after{width:100%}
+/* StellarNav Styling overrides */
+.stellarnav {
+  width: auto;
+  z-index: 300;
+  background: transparent;
+}
+.stellarnav ul {
+  text-align: right;
+}
+.stellarnav.desktop ul li a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: .7rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  transition: color .3s;
+  position: relative;
+  padding: 10px 1.4rem;
+}
+.stellarnav.desktop ul li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  left: 1.4rem;
+  right: 1.4rem;
+  height: 1px;
+  background: var(--a1);
+  transition: width .3s;
+  width: 0;
+}
+.stellarnav.desktop ul li a:hover {
+  color: var(--text);
+}
+.stellarnav.desktop ul li a:hover::after {
+  width: calc(100% - 2.8rem);
+}
 
 /* HERO */
 #hero{position:relative;z-index:10;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:9rem 6% 6rem}
@@ -69,7 +102,8 @@ nav.scrolled{
 
 .htitle{margin-bottom:2rem;max-width:900px;perspective:900px;opacity:0}
 .hl1{display:flex;flex-wrap:wrap;font-size:clamp(3.5rem,10vw,9.5rem);font-weight:200;letter-spacing:-.05em;line-height:.88;-webkit-text-stroke:1px rgba(200,200,255,.22);color:transparent}
-.hl2{display:flex;flex-wrap:wrap;font-size:clamp(3.5rem,10vw,9.5rem);font-weight:900;letter-spacing:-.05em;line-height:.9;background:linear-gradient(135deg,#fff 30%,rgba(190,180,255,.65));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hl2{display:flex;flex-wrap:wrap;font-size:clamp(3.5rem,10vw,9.5rem);font-weight:900;letter-spacing:-.05em;line-height:.9}
+.hl2 .ch{background:linear-gradient(135deg,#fff 30%,rgba(190,180,255,.65));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .ch{display:inline-block;transform-origin:center bottom}
 .hdesc{font-size:.92rem;color:var(--muted);line-height:1.9;max-width:360px;margin-bottom:3rem;opacity:0}
 .hbtns{display:flex;gap:1rem;margin-bottom:5rem;opacity:0}
@@ -212,10 +246,58 @@ footer{position:relative;z-index:10;display:flex;justify-content:space-between;a
   nav.scrolled {
     padding: 0.85rem 6% !important;
   }
-  .nl { gap: 1.2rem !important; }
-  .nl a { font-size: 0.78rem !important; }
+  
+  /* StellarNav Mobile Overrides */
+  .stellarnav .menu-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    color: var(--text) !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 6px;
+    padding: 0.55rem 0.9rem !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    font-family: 'Outfit', sans-serif;
+  }
+  .stellarnav .menu-toggle:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+  }
+  .stellarnav .menu-toggle .bars span {
+    background: var(--text) !important;
+    height: 2px !important;
+    width: 16px !important;
+    margin: 3px 0 !important;
+  }
+  .stellarnav.mobile ul {
+    background: rgba(5, 5, 14, 0.95) !important;
+    backdrop-filter: blur(25px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 8px !important;
+    margin-top: 12px !important;
+    padding: 0.8rem 0 !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+  }
+  .stellarnav.mobile ul li a {
+    color: var(--muted) !important;
+    font-size: 0.75rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    padding: 0.8rem 1.5rem !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
+    text-align: left !important;
+  }
+  .stellarnav.mobile ul li a:hover {
+    color: var(--text) !important;
+    background: rgba(108, 95, 255, 0.1) !important;
+  }
   
   #hero { padding: 8rem 4% 4rem !important; }
+  .hl1, .hl2 { font-size: clamp(2.2rem, 10vw, 4rem) !important; flex-wrap: nowrap !important; }
   .hdesc { font-size: 0.95rem !important; line-height: 1.6 !important; max-width: 100% !important; }
   .hstats { gap: 1.8rem !important; flex-wrap: wrap !important; }
   
@@ -224,12 +306,14 @@ footer{position:relative;z-index:10;display:flex;justify-content:space-between;a
   .plist { margin-top: 2rem !important; }
   
   .pi {
-    grid-template-columns: 1fr auto !important;
-    gap: 1rem !important;
-    padding: 1.4rem 0.5rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.8rem !important;
+    padding: 1.5rem 0.8rem !important;
   }
   .pno, .parr { display: none !important; }
-  .ptgs { justify-content: flex-start !important; margin-top: 0.5rem; }
+  .ptgs { justify-content: flex-start !important; margin-top: 0.2rem; }
   
   #about .si { grid-template-columns: 1fr !important; gap: 2rem !important; }
   .img-outer { margin-bottom: 2rem }
@@ -259,12 +343,14 @@ footer{position:relative;z-index:10;display:flex;justify-content:space-between;a
   <div class="nav-left">
     <div class="logo">Sam.dev</div>
   </div>
-  <ul class="nl">
-    <li><a href="#about">About</a></li>
-    <li><a href="#projects">Work</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  <div class="stellarnav" id="main-nav">
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Work</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
 </nav>
 
 <section id="hero">
@@ -286,18 +372,6 @@ footer{position:relative;z-index:10;display:flex;justify-content:space-between;a
   <div class="scrlh" id="sh"><div class="scrl-l"></div><span>Scroll</span></div>
 </section>
 
-<div class="mqw">
-  <div class="mqi">
-    <span>HTML <em>·</em></span><span>CSS <em>·</em></span><span>JavaScript <em>·</em></span>
-    <span>Three.js <em>·</em></span><span>GSAP <em>·</em></span><span>Python <em>·</em></span>
-    <span>WordPress <em>·</em></span><span>Firebase <em>·</em></span><span>Gemini API <em>·</em></span>
-    <span>Generative Art <em>·</em></span><span>Illustrator <em>·</em></span><span>Pine Script <em>·</em></span>
-    <span>HTML <em>·</em></span><span>CSS <em>·</em></span><span>JavaScript <em>·</em></span>
-    <span>Three.js <em>·</em></span><span>GSAP <em>·</em></span><span>Python <em>·</em></span>
-    <span>WordPress <em>·</em></span><span>Firebase <em>·</em></span><span>Gemini API <em>·</em></span>
-    <span>Generative Art <em>·</em></span><span>Illustrator <em>·</em></span><span>Pine Script <em>·</em></span>
-  </div>
-</div>
 
 <section id="about" class="sec">
   <div class="si">
@@ -393,11 +467,21 @@ footer{position:relative;z-index:10;display:flex;justify-content:space-between;a
   <span>Designed &amp; built with passion</span>
 </footer>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/vinnymoreira/stellarnav@master/js/stellarnav.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <script>
 gsap.registerPlugin(ScrollTrigger);
+
+jQuery(document).ready(function($) {
+  jQuery('#main-nav').stellarNav({
+    theme: 'plain',
+    breakpoint: 768,
+    position: 'right'
+  });
+});
 
 /* ─── CUSTOM CURSOR ─────────────────── */
 const curDot=document.getElementById('cur'),curRing=document.getElementById('curr');
@@ -552,16 +636,6 @@ document.querySelectorAll('.sn[data-val]').forEach(el=>{
   gsap.to(o,{v:target,duration:2,delay:1.6,ease:'power2.out',onUpdate(){el.textContent=Math.round(o.v);}});
 });
 
-/* ─── MAGNETIC BUTTONS ──────────────── */
-document.querySelectorAll('.mag').forEach(btn=>{
-  btn.addEventListener('mousemove',e=>{
-    const r=btn.getBoundingClientRect();
-    gsap.to(btn,{x:(e.clientX-r.left-r.width/2)*.4,y:(e.clientY-r.top-r.height/2)*.4,duration:.35,ease:'power2.out'});
-  });
-  btn.addEventListener('mouseleave',()=>{
-    gsap.to(btn,{x:0,y:0,duration:.75,ease:'elastic.out(1,.45)'});
-  });
-});
 
 /* ─── MOUSE PARALLAX ────────────────── */
 let mmx=0,mmy=0;
@@ -633,37 +707,39 @@ const projectScreenshots=[
 ];
 let activeProject=-1;
 
-const projectItems=document.querySelectorAll('.pi');
-projectItems.forEach((el,idx)=>{
-  el.addEventListener('mouseenter',()=>{
-    activeProject=idx;
-    previewImg.src=projectScreenshots[idx];
-    previewEl.classList.add('visible');
+if (window.matchMedia("(hover: hover)").matches) {
+  const projectItems=document.querySelectorAll('.pi');
+  projectItems.forEach((el,idx)=>{
+    el.addEventListener('mouseenter',()=>{
+      activeProject=idx;
+      previewImg.src=projectScreenshots[idx];
+      previewEl.classList.add('visible');
+    });
+    el.addEventListener('mouseleave',()=>{
+      activeProject=-1;
+      previewEl.classList.remove('visible');
+    });
   });
-  el.addEventListener('mouseleave',()=>{
-    activeProject=-1;
-    previewEl.classList.remove('visible');
+
+  let pX=0,pY=0;
+  let targetPX=0,targetPY=0;
+  document.addEventListener('mousemove',e=>{
+    targetPX=e.clientX;
+    targetPY=e.clientY;
   });
-});
 
-let pX=0,pY=0;
-let targetPX=0,targetPY=0;
-document.addEventListener('mousemove',e=>{
-  targetPX=e.clientX;
-  targetPY=e.clientY;
-});
-
-(function updatePreviewPos(){
-  requestAnimationFrame(updatePreviewPos);
-  let tx=targetPX+35;
-  let ty=targetPY-240;
-  if(tx+360>innerWidth)tx=targetPX-370;
-  if(ty<10)ty=targetPY+30;
-  pX+=(tx-pX)*.12;
-  pY+=(ty-pY)*.12;
-  previewEl.style.left=`${pX}px`;
-  previewEl.style.top=`${pY}px`;
-})();
+  (function updatePreviewPos(){
+    requestAnimationFrame(updatePreviewPos);
+    let tx=targetPX+35;
+    let ty=targetPY-240;
+    if(tx+360>innerWidth)tx=targetPX-370;
+    if(ty<10)ty=targetPY+30;
+    pX+=(tx-pX)*.12;
+    pY+=(ty-pY)*.12;
+    previewEl.style.left=`${pX}px`;
+    previewEl.style.top=`${pY}px`;
+  })();
+}
 
 window.addEventListener('resize',()=>{
   C.aspect=innerWidth/innerHeight;C.updateProjectionMatrix();
