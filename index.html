@@ -22,9 +22,10 @@ h1, h2, h3, .logo, .stitle, .htitle, .sn, .asn, .hbadge {
 }
 
 /* CURSOR */
-#cur,#curr{position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);border-radius:50%;will-change:left,top}
-#cur{width:8px;height:8px;background:var(--a1);mix-blend-mode:screen;transition:width .18s,height .18s,background .18s}
-#curr{width:32px;height:32px;border:1px solid rgba(108,95,255,.42)}
+#cur,#curr{position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);will-change:left,top,width,height,border-radius}
+#cur{width:8px;height:8px;border-radius:50%;background:var(--a1);mix-blend-mode:screen;transition:width .18s,height .18s,background .18s}
+#curr{width:32px;height:32px;border-radius:50%;border:1px solid rgba(108,95,255,.42);transition:border-color 0.3s, background-color 0.3s, width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.3s cubic-bezier(0.16, 1, 0.3, 1)}
+#curr.snapped{background:rgba(108,95,255,0.06);border-color:rgba(108,95,255,0.85)}
 
 /* CANVASES */
 #cv{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
@@ -117,11 +118,25 @@ nav.scrolled{
 /* PROJECTS */
 #projects{flex-direction:column;justify-content:center;align-items:flex-start}
 .plist{width:100%;margin-top:4rem}
-.pi{display:grid;grid-template-columns:64px 1fr auto 28px;align-items:center;gap:2.5rem;padding:1.85rem 1.2rem;border-bottom:1px solid var(--border);cursor:pointer;text-decoration:none;color:inherit;position:relative;overflow:hidden;transition:padding-left .35s var(--ease)}
+.pi{display:grid;grid-template-columns:64px 1fr auto 28px;align-items:center;gap:2.5rem;padding:1.85rem 1.2rem;border-bottom:1px solid var(--border);cursor:pointer;text-decoration:none;color:inherit;position:relative;overflow:hidden;transition:padding-left .35s var(--ease);z-index:2}
 .pi:first-child{border-top:1px solid var(--border)}
-.pi::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .45s;background:var(--pg)}
-.pi:hover{padding-left:2.4rem}.pi:hover::before{opacity:1}
+.pi:hover{padding-left:2.4rem}
 .pi:hover .pnm{color:#fff}.pi:hover .parr{transform:rotate(-45deg);color:var(--text)}
+.pi-hover-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: rgba(108, 95, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px;
+  pointer-events: none;
+  opacity: 0;
+  transition: top 0.38s cubic-bezier(0.16, 1, 0.3, 1), height 0.38s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  z-index: 1;
+}
 .pno{font-size:.65rem;color:var(--muted);letter-spacing:.12em;font-weight:500;position:relative}
 .pnm{font-size:clamp(1rem,2.5vw,1.75rem);font-weight:500;margin-bottom:.3rem;transition:color .3s;position:relative}
 .pds{font-size:.8rem;color:var(--muted);position:relative}
@@ -318,7 +333,7 @@ footer{position:relative;z-index:10;display:flex;justify-content:space-between;a
     </div>
     <div>
       <p class="slbl rv">Who I Am</p>
-      <h2 class="stitle rv">I design &amp;<br>build digital<br>products</h2>
+      <h2 class="stitle">I design &amp;<br>build digital<br>products</h2>
       <p class="atxt rv">Freelance web developer and digital creator — focused on frontend, interactive UI, and generative art. I work across HTML/CSS/JS, WordPress, Python, and creative APIs to bring ideas to life with precision and style.</p>
       <div class="astats rv">
         <div><div class="asn">5+</div><div class="asl">Years</div></div>
@@ -331,8 +346,9 @@ footer{position:relative;z-index:10;display:flex;justify-content:space-between;a
 
 <section id="projects" class="sec">
   <p class="slbl rv">Selected Work</p>
-  <h2 class="stitle rv">Projects</h2>
+  <h2 class="stitle">Projects</h2>
   <div class="plist">
+    <div class="pi-hover-bg"></div>
     <a class="pi rv" href="#" style="--pg:linear-gradient(90deg,rgba(108,95,255,.16),transparent)">
       <div class="pno">01</div>
       <div><div class="pnm">Arcana</div><div class="pds">AI spiritual guidance — Tarot, Vedic Astrology, Numerology via Gemini</div></div>
@@ -363,7 +379,7 @@ footer{position:relative;z-index:10;display:flex;justify-content:space-between;a
 <section id="skills" class="sec">
   <div class="skw">
     <p class="slbl rv">Stack</p>
-    <h2 class="stitle rv">What I<br>work with</h2>
+    <h2 class="stitle">What I<br>work with</h2>
     <div class="skgrid">
       <span class="ski rv">HTML / CSS</span><span class="ski rv">JavaScript</span>
       <span class="ski rv">Three.js</span><span class="ski rv">GSAP</span>
@@ -379,7 +395,7 @@ footer{position:relative;z-index:10;display:flex;justify-content:space-between;a
 <section id="contact" class="sec">
   <div>
     <p class="slbl rv">Get in Touch</p>
-    <h2 class="stitle rv">Ready to build<br><strong>something great.</strong></h2>
+    <h2 class="stitle">Ready to build<br><strong>something great.</strong></h2>
     <a href="mailto:hello@sam.dev" class="cem rv mag">hello@sam.dev</a>
     <div class="csoc rv">
       <a href="#">GitHub</a><a href="#">LinkedIn</a>
@@ -402,12 +418,68 @@ gsap.registerPlugin(ScrollTrigger);
 /* ─── CUSTOM CURSOR ─────────────────── */
 const curDot=document.getElementById('cur'),curRing=document.getElementById('curr');
 let cx=0,cy=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;curDot.style.left=cx+'px';curDot.style.top=cy+'px'});
-(function cl(){requestAnimationFrame(cl);rx+=(cx-rx)*.11;ry+=(cy-ry)*.11;curRing.style.left=rx+'px';curRing.style.top=ry+'px'})();
-document.querySelectorAll('a,button,.pi,.ski').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{curDot.style.width='18px';curDot.style.height='18px';curDot.style.background='var(--a2)';curRing.style.transform='translate(-50%,-50%) scale(1.8)'});
-  el.addEventListener('mouseleave',()=>{curDot.style.width='8px';curDot.style.height='8px';curDot.style.background='var(--a1)';curRing.style.transform='translate(-50%,-50%) scale(1)'});
+let curW=32,curH=32,curR=50;
+let hoverEl=null;
+
+const trailCanvas=document.createElement('canvas');
+trailCanvas.id='cursor-trail';
+Object.assign(trailCanvas.style,{position:'fixed',top:0,left:0,width:'100%',height:'100%',pointerEvents:'none',zIndex:9998});
+document.body.appendChild(trailCanvas);
+const tCtx=trailCanvas.getContext('2d');
+function resizeTrail(){trailCanvas.width=window.innerWidth;trailCanvas.height=window.innerHeight;}
+window.addEventListener('resize',resizeTrail);resizeTrail();
+
+let particles=[];
+function addParticle(x,y){
+  particles.push({x,y,vx:(Math.random()-0.5)*1.6,vy:(Math.random()-0.5)*1.6,alpha:1.0,size:Math.random()*2.8+1.2});
+}
+
+document.addEventListener('mousemove',e=>{
+  cx=e.clientX;cy=e.clientY;
+  curDot.style.left=cx+'px';curDot.style.top=cy+'px';
+  if(Math.random()>0.3)addParticle(cx,cy);
 });
+
+document.querySelectorAll('a,button,.pi,.ski,.mag').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{
+    hoverEl=el;
+    curRing.classList.add('snapped');
+    curDot.style.width='12px';curDot.style.height='12px';curDot.style.background='var(--a2)';
+  });
+  el.addEventListener('mouseleave',()=>{
+    hoverEl=null;
+    curRing.classList.remove('snapped');
+    curDot.style.width='8px';curDot.style.height='8px';curDot.style.background='var(--a1)';
+  });
+});
+
+(function cl(){
+  requestAnimationFrame(cl);
+  let tx=cx,ty=cy,tw=32,th=32,tr=50;
+  if(hoverEl){
+    const r=hoverEl.getBoundingClientRect();
+    tx=r.left+r.width/2;
+    ty=r.top+r.height/2;
+    tw=r.width+12;
+    th=r.height+12;
+    const computedRadius=window.getComputedStyle(hoverEl).borderRadius;
+    tr=parseInt(computedRadius)||8;
+  }
+  rx+=(tx-rx)*0.16;ry+=(ty-ry)*0.16;
+  curW+=(tw-curW)*0.16;curH+=(th-curH)*0.16;curR+=(tr-curR)*0.16;
+  curRing.style.left=rx+'px';curRing.style.top=ry+'px';
+  curRing.style.width=curW+'px';curRing.style.height=curH+'px';curRing.style.borderRadius=curR+'px';
+
+  tCtx.clearRect(0,0,trailCanvas.width,trailCanvas.height);
+  for(let i=particles.length-1;i>=0;i--){
+    const p=particles[i];p.x+=p.vx;p.y+=p.vy;p.alpha-=0.025;
+    if(p.alpha<=0)particles.splice(i,1);
+    else{
+      tCtx.fillStyle=`rgba(108,95,255,${p.alpha*0.45})`;
+      tCtx.beginPath();tCtx.arc(p.x,p.y,p.size,0,Math.PI*2);tCtx.fill();
+    }
+  }
+})();
 
 
 
@@ -431,6 +503,8 @@ varying vec3 vWP;
 varying float vD;
 uniform float uT;
 uniform float uDist;
+uniform vec3 uMouse;
+uniform float uMouseStrength;
 
 float hash(vec3 p){p=fract(p*vec3(443.897,397.297,491.187));p+=dot(p,p.yxz+19.19);return fract((p.x+p.y)*p.z);}
 float noise(vec3 p){
@@ -445,7 +519,10 @@ void main(){
   float t=uT;
   vec3 q=vec3(fbm(position+t*.11),fbm(position+vec3(5.2,1.3,0)+t*.09),fbm(position+vec3(1.7,9.2,3.4)+t*.08));
   vec3 r=vec3(fbm(position+3.8*q+vec3(1.7,9.2,0)+t*.07),fbm(position+3.8*q+vec3(8.3,2.8,0)+t*.06),fbm(position+3.8*q+vec3(0,0,5)+t*.05));
-  float d=fbm(position+3.8*r)*uDist;
+  vec3 worldPos=(modelMatrix*vec4(position,1.0)).xyz;
+  float distToMouse=distance(worldPos,uMouse);
+  float mouseWarp=exp(-distToMouse*distToMouse*0.35)*uMouseStrength*0.36;
+  float d=fbm(position+3.8*r)*uDist+mouseWarp;
   vD=d;
   vec3 np=position+normal*d;
   vWP=(modelMatrix*vec4(np,1.0)).xyz;
@@ -471,8 +548,31 @@ void main(){
   col+=mix(c3,c2,.5)*max(0.,vD)*.45;
   gl_FragColor=vec4(col,1.0);
 }`;
-const bMat=new THREE.ShaderMaterial({vertexShader:VS,fragmentShader:FS,uniforms:{uT:{value:0},uDist:{value:.35},uCP:{value:C.position}}});
+const bMat=new THREE.ShaderMaterial({
+  vertexShader:VS,
+  fragmentShader:FS,
+  uniforms:{
+    uT:{value:0},
+    uDist:{value:.35},
+    uCP:{value:C.position},
+    uMouse:{value:new THREE.Vector3(0,0,0)},
+    uMouseStrength:{value:0}
+  }
+});
 const blob=new THREE.Mesh(new THREE.SphereGeometry(1.8,96,96),bMat);
+
+// WebGL Mouse Interaction Tracking
+const raycaster=new THREE.Raycaster();
+const mouse3D=new THREE.Vector2();
+let mouseStrength=0;
+let lastMX=0,lastMY=0;
+document.addEventListener('mousemove',e=>{
+  mouse3D.x=(e.clientX/window.innerWidth)*2-1;
+  mouse3D.y=-(e.clientY/window.innerHeight)*2+1;
+  const dx=e.clientX-lastMX;const dy=e.clientY-lastMY;
+  mouseStrength=Math.min(Math.sqrt(dx*dx+dy*dy)*0.05,1.2);
+  lastMX=e.clientX;lastMY=e.clientY;
+});
 
 /* Additive glow layers (simulated bloom) */
 function mkG(r,col,op){return new THREE.Mesh(new THREE.SphereGeometry(r,24,24),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:op,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.BackSide}));}
@@ -581,6 +681,18 @@ const clk=new THREE.Clock();
   bMat.uniforms.uDist.value=.32+scrollVel*1.5;
   bMat.uniforms.uCP.value.copy(C.position);
 
+  // Update mouse Raycasting for WebGL interaction
+  raycaster.setFromCamera(mouse3D,C);
+  const targetPlane=new THREE.Plane(new THREE.Vector3(0,0,1),0);
+  const intersection=new THREE.Vector3();
+  raycaster.ray.intersectPlane(targetPlane,intersection);
+  bMat.uniforms.uMouse.value.copy(intersection);
+  mouseStrength*=0.94;
+  bMat.uniforms.uMouseStrength.value=mouseStrength;
+
+  // Starfield Parallax
+  bgPts.position.y=scrollY*0.0018;
+
   // Object transform
   obj.position.set(P.px,P.py+Math.sin(t*.5)*.1,0);
   obj.rotation.y=baseRot;
@@ -634,16 +746,46 @@ const projectScreenshots=[
 let activeProject=-1;
 
 const projectItems=document.querySelectorAll('.pi');
+const piHoverBg=document.querySelector('.pi-hover-bg');
+const plist=document.querySelector('.plist');
 projectItems.forEach((el,idx)=>{
   el.addEventListener('mouseenter',()=>{
     activeProject=idx;
     previewImg.src=projectScreenshots[idx];
     previewEl.classList.add('visible');
+
+    // Slide indicators
+    const elRect=el.getBoundingClientRect();
+    const plistRect=plist.getBoundingClientRect();
+    piHoverBg.style.top=`${elRect.top-plistRect.top}px`;
+    piHoverBg.style.height=`${elRect.height}px`;
+    piHoverBg.style.opacity='1';
   });
   el.addEventListener('mouseleave',()=>{
     activeProject=-1;
     previewEl.classList.remove('visible');
   });
+});
+plist.addEventListener('mouseleave',()=>{
+  piHoverBg.style.opacity='0';
+});
+
+// Section Titles Slide-in clip-path reveals
+document.querySelectorAll('.stitle').forEach(title=>{
+  gsap.fromTo(title,
+    {clipPath:'polygon(0 0, 0 0, 0 100%, 0% 100%)',y:30,opacity:0},
+    {
+      clipPath:'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+      y:0,opacity:1,duration:1.2,ease:'power3.out',
+      scrollTrigger:{trigger:title,start:'top 85%',toggleActions:'play none none reverse'}
+    }
+  );
+});
+
+// About Section Portrait Parallax Scroll Effect
+gsap.to('.img-outer',{
+  yPercent:-15,ease:'none',
+  scrollTrigger:{trigger:'#about',start:'top bottom',end:'bottom top',scrub:true}
 });
 
 let pX=0,pY=0;
