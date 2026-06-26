@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sam — Creative Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800;900&family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#05050e;--text:#e8e8ff;--muted:#9fa0c3;
+  --a1:#6c5fff;--a2:#9b91ff;--a3:#4a3eff;
+  --border:rgba(255,255,255,0.055);
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;cursor:none;transition:background 0.3s,color 0.3s}
+
+/* Headings Typography */
+h1, h2, h3, .logo, .stitle, .htitle, .sn, .asn, .hbadge {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* CURSOR */
+#cur,#curr{position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);border-radius:50%;will-change:left,top}
+#cur{width:8px;height:8px;background:var(--a1);mix-blend-mode:screen;transition:width .18s,height .18s,background .18s}
+#curr{width:32px;height:32px;border:1px solid rgba(108,95,255,.42)}
+
+/* CANVASES */
+#cv{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+/* NAV */
+nav{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:200;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:1.4rem 6%;
+  background:rgba(10, 10, 25, 0.4);
+  backdrop-filter:blur(25px) saturate(180%);
+  -webkit-backdrop-filter:blur(25px) saturate(180%);
+  border-bottom:1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:0 4px 30px rgba(0, 0, 0, 0.15);
+  transition:all 0.4s cubic-bezier(.16,1,.3,1);
+}
+nav.scrolled{
+  padding:0.95rem 6%;
+  background:rgba(5, 5, 14, 0.75);
+  border-bottom:1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+.nav-left{display:flex;align-items:center;gap:1.5rem}
+.logo{font-size:.78rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;background:linear-gradient(135deg,var(--a1),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+.nl{display:flex;gap:2.8rem;list-style:none}
+.nl a{color:var(--muted);text-decoration:none;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;transition:color .3s;position:relative}
+.nl a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--a1);transition:width .3s}
+.nl a:hover{color:var(--text)}.nl a:hover::after{width:100%}
+
+/* HERO */
+#hero{position:relative;z-index:10;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:9rem 6% 6rem}
+.badge{display:inline-flex;align-items:center;gap:.6rem;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--a1);margin-bottom:2.2rem;opacity:0}
+.bdot{width:7px;height:7px;border-radius:50%;background:var(--a1);animation:blink 2s infinite}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(108,95,255,.6)}50%{box-shadow:0 0 0 7px rgba(108,95,255,0)}}
+
+.htitle{margin-bottom:2rem;max-width:900px;perspective:900px;opacity:0}
+.hl1{display:flex;flex-wrap:wrap;font-size:clamp(3.5rem,10vw,9.5rem);font-weight:200;letter-spacing:-.05em;line-height:.88;-webkit-text-stroke:1px rgba(200,200,255,.22);color:transparent}
+.hl2{display:flex;flex-wrap:wrap;font-size:clamp(3.5rem,10vw,9.5rem);font-weight:900;letter-spacing:-.05em;line-height:.9;background:linear-gradient(135deg,#fff 30%,rgba(190,180,255,.65));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ch{display:inline-block;transform-origin:center bottom}
+.hdesc{font-size:.92rem;color:var(--muted);line-height:1.9;max-width:360px;margin-bottom:3rem;opacity:0}
+.hbtns{display:flex;gap:1rem;margin-bottom:5rem;opacity:0}
+.btn-p{display:inline-block;padding:.9rem 2.2rem;background:rgba(108,95,255,0.8);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;text-decoration:none;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;transition:box-shadow .3s,transform .3s,background-color .3s;position:relative;overflow:hidden}
+.btn-p::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--a1),var(--a2));opacity:0;transition:opacity .3s}
+.btn-p:hover{background:rgba(108,95,255,0.95);box-shadow:0 12px 30px rgba(108,95,255,0.4);transform:translateY(-2px)}.btn-p:hover::before{opacity:1}
+.btn-p span{position:relative;z-index:1}
+.btn-g{display:inline-block;padding:.9rem 2.2rem;border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:var(--muted);text-decoration:none;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;transition:border-color .3s,color .3s,background-color .3s;background:rgba(255,255,255,0.03);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.btn-g:hover{border-color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.08);color:var(--text)}
+.hstats{display:flex;gap:4rem;padding-top:3rem;border-top:1px solid var(--border);opacity:0}
+.sn{font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,var(--a1),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.su{font-size:1rem;font-weight:700;background:linear-gradient(135deg,var(--a1),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sl{display:block;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+.scrlh{position:absolute;bottom:2.5rem;right:6%;display:flex;flex-direction:column;align-items:center;gap:.5rem;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);opacity:0}
+.scrl-l{width:1px;height:48px;background:linear-gradient(to bottom,var(--a1),transparent);animation:sl 2s ease-in-out infinite}
+@keyframes sl{0%,100%{opacity:.2;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.1)}}
+
+/* MARQUEE */
+.mqw{position:relative;z-index:10;overflow:hidden;white-space:nowrap;padding:.85rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(108,95,255,.04)}
+.mqi{display:inline-block;animation:mq 26s linear infinite}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mqi span{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);padding:0 1.8rem}
+.mqi em{color:var(--a1);font-style:normal}
+
+/* SHARED */
+.sec{position:relative;z-index:10;min-height:100vh;display:flex;align-items:center;padding:8rem 6%}
+.slbl{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--a1);margin-bottom:.9rem}
+.stitle{font-size:clamp(2rem,4.5vw,3.8rem);font-weight:300;letter-spacing:-.03em;line-height:1.12}
+.stitle strong{font-weight:900}
+
+/* ABOUT */
+#about .si{display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:center;width:100%}
+.img-outer{position:relative;width:300px;height:346px;margin:0 auto}
+.hex-b{position:absolute;inset:0;background:linear-gradient(135deg,var(--a1),var(--a2),var(--a3));clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)}
+.hex-i{position:absolute;inset:3px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);overflow:hidden;background:var(--bg)}
+.hex-i img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease);display:block}
+.img-outer:hover .hex-i img{transform:scale(1.05)}
+.hex-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;background:linear-gradient(135deg,rgba(108,95,255,.12),rgba(255,94,158,.08))}
+.hex-ph span{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:center;padding:0 1.5rem}
+.atxt{font-size:.88rem;color:var(--muted);line-height:1.95;margin:1.4rem 0 2.5rem}
+.astats{display:flex;gap:2.5rem}
+.asn{font-size:1.7rem;font-weight:700;color:var(--text)}
+.asl{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:.2rem}
+
+/* PROJECTS */
+#projects{flex-direction:column;justify-content:center;align-items:flex-start}
+.plist{width:100%;margin-top:4rem}
+.pi{display:grid;grid-template-columns:64px 1fr auto 28px;align-items:center;gap:2.5rem;padding:1.85rem 1.2rem;border-bottom:1px solid var(--border);cursor:pointer;text-decoration:none;color:inherit;position:relative;overflow:hidden;transition:padding-left .35s var(--ease)}
+.pi:first-child{border-top:1px solid var(--border)}
+.pi::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .45s;background:var(--pg)}
+.pi:hover{padding-left:2.4rem}.pi:hover::before{opacity:1}
+.pi:hover .pnm{color:#fff}.pi:hover .parr{transform:rotate(-45deg);color:var(--text)}
+.pno{font-size:.65rem;color:var(--muted);letter-spacing:.12em;font-weight:500;position:relative}
+.pnm{font-size:clamp(1rem,2.5vw,1.75rem);font-weight:500;margin-bottom:.3rem;transition:color .3s;position:relative}
+.pds{font-size:.8rem;color:var(--muted);position:relative}
+.ptgs{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:flex-end;position:relative}
+.tg{font-size:.6rem;padding:.22rem .55rem;border:1px solid var(--border);color:var(--muted)}
+.parr{font-size:1.2rem;transition:all .35s;color:var(--muted);position:relative}
+
+/* SKILLS */
+#skills{}
+.skw{max-width:660px}
+.skgrid{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2.5rem}
+.ski{font-size:.75rem;padding:.52rem 1.1rem;border:1px solid rgba(255,255,255,0.06);border-radius:6px;color:var(--muted);letter-spacing:.05em;cursor:default;transition:all .3s;position:relative;overflow:hidden;background:rgba(255,255,255,0.02);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.ski::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--a1),var(--a2));opacity:0;transition:opacity .3s;z-index:-1}
+.ski:hover{border-color:transparent;color:#fff;transform:perspective(400px) rotateX(-8deg) translateY(-2px);box-shadow:0 10px 28px rgba(108,95,255,.38)}.ski:hover::before{opacity:1}
+
+/* CONTACT */
+#contact{flex-direction:column;justify-content:center;align-items:center;text-align:center}
+#contact .csoc{justify-content:center}
+.cem{display:inline-block;font-size:clamp(1.3rem,3.8vw,3rem);font-weight:300;letter-spacing:-.02em;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:.3rem;transition:color .35s,border-color .35s;margin-top:2rem}
+.cem:hover{color:var(--a1);border-color:var(--a1)}
+.csoc{display:flex;gap:2.5rem;margin-top:2.5rem}
+.csoc a{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
+.csoc a:hover{color:var(--text)}
+
+footer{position:relative;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:1.5rem 6%;font-size:.68rem;color:var(--muted);border-top:1px solid var(--border)}
+.rv{opacity:0;transform:translateY(22px)}
+
+/* ── Project Hover Preview ── */
+.p-preview {
+  position: fixed;
+  pointer-events: none;
+  z-index: 500;
+  width: 340px;
+  height: 230px;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.85);
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(20, 20, 35, 0.55);
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  padding: 12px;
+}
+.p-preview-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+.p-preview-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.15);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.p-preview.visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+.p-preview.visible img {
+  transform: scale(1);
+}
+
+/* ── RESPONSIVE OVERRIDES ── */
+@media (hover: none), (max-width: 768px) {
+  body { cursor: auto !important; }
+  #cur, #curr { display: none !important; }
+  .p-preview { display: none !important; }
+  
+  nav {
+    position: fixed;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    padding: 1.1rem 6% !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  }
+  nav.scrolled {
+    padding: 0.85rem 6% !important;
+  }
+  .nl { gap: 1.2rem !important; }
+  .nl a { font-size: 0.78rem !important; }
+  
+  #hero { padding: 8rem 4% 4rem !important; }
+  .hdesc { font-size: 0.95rem !important; line-height: 1.6 !important; max-width: 100% !important; }
+  .hstats { gap: 1.8rem !important; flex-wrap: wrap !important; }
+  
+  .sec { padding: 0 4% !important; }
+  #projects { padding: 6rem 4% !important; }
+  .plist { margin-top: 2rem !important; }
+  
+  .pi {
+    grid-template-columns: 1fr auto !important;
+    gap: 1rem !important;
+    padding: 1.4rem 0.5rem !important;
+  }
+  .pno, .parr { display: none !important; }
+  .ptgs { justify-content: flex-start !important; margin-top: 0.5rem; }
+  
+  #about .si { grid-template-columns: 1fr !important; gap: 2rem !important; }
+  .img-outer { margin-bottom: 2rem }
+  .astats { gap: 2rem !important; }
+  
+  #skills { padding-left: 4% !important; }
+  .skgrid { margin-top: 1.8rem !important; gap: 0.5rem !important; }
+  .ski { padding: 0.4rem 0.8rem !important; font-size: 0.78rem !important; }
+  
+  .csoc { gap: 1.5rem !important; flex-wrap: wrap; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="curr"></div>
+<canvas id="cv"></canvas>
+
+<div class="p-preview" id="p-preview">
+  <div class="p-preview-inner">
+    <img id="p-preview-img" src="" alt="Project Preview">
+  </div>
+</div>
+
+<nav>
+  <div class="nav-left">
+    <div class="logo">Sam.dev</div>
+  </div>
+  <ul class="nl">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="badge"><span class="bdot"></span>Available for freelance — 2026</div>
+  <h1 class="htitle" id="htitle">
+    <span class="hl1">CREATIVE</span>
+    <span class="hl2">DEVELOPER</span>
+  </h1>
+  <p class="hdesc">Building immersive digital experiences — where clean engineering meets bold creative vision.</p>
+  <div class="hbtns">
+    <a href="#projects" class="btn-p mag"><span>View My Work</span></a>
+    <a href="#contact" class="btn-g mag">Get in Touch</a>
+  </div>
+  <div class="hstats">
+    <div><span class="sn" data-val="5">0</span><span class="su">+</span><div class="sl">Years Exp.</div></div>
+    <div><span class="sn" data-val="50">0</span><span class="su">+</span><div class="sl">Projects</div></div>
+    <div><span class="sn" data-val="20">0</span><span class="su">+</span><div class="sl">Clients</div></div>
+  </div>
+  <div class="scrlh" id="sh"><div class="scrl-l"></div><span>Scroll</span></div>
+</section>
+
+<div class="mqw">
+  <div class="mqi">
+    <span>HTML <em>·</em></span><span>CSS <em>·</em></span><span>JavaScript <em>·</em></span>
+    <span>Three.js <em>·</em></span><span>GSAP <em>·</em></span><span>Python <em>·</em></span>
+    <span>WordPress <em>·</em></span><span>Firebase <em>·</em></span><span>Gemini API <em>·</em></span>
+    <span>Generative Art <em>·</em></span><span>Illustrator <em>·</em></span><span>Pine Script <em>·</em></span>
+    <span>HTML <em>·</em></span><span>CSS <em>·</em></span><span>JavaScript <em>·</em></span>
+    <span>Three.js <em>·</em></span><span>GSAP <em>·</em></span><span>Python <em>·</em></span>
+    <span>WordPress <em>·</em></span><span>Firebase <em>·</em></span><span>Gemini API <em>·</em></span>
+    <span>Generative Art <em>·</em></span><span>Illustrator <em>·</em></span><span>Pine Script <em>·</em></span>
+  </div>
+</div>
+
+<section id="about" class="sec">
+  <div class="si">
+    <div class="rv">
+      <div class="img-outer">
+        <div class="hex-b"></div>
+        <div class="hex-i">
+          <img id="myPhoto" src="profile.png" alt="Sam" onerror="this.style.display='none';document.getElementById('hph').style.display='flex'">
+          <div id="hph" class="hex-ph" style="display:none">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="rgba(108,95,255,.55)" stroke-width="1.2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            <span>Place your<br>photo here</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="slbl rv">Who I Am</p>
+      <h2 class="stitle rv">I design &amp;<br>build digital<br>products</h2>
+      <p class="atxt rv">Freelance web developer and digital creator — focused on frontend, interactive UI, and generative art. I work across HTML/CSS/JS, WordPress, Python, and creative APIs to bring ideas to life with precision and style.</p>
+      <div class="astats rv">
+        <div><div class="asn">5+</div><div class="asl">Years</div></div>
+        <div><div class="asn">50+</div><div class="asl">Projects</div></div>
+        <div><div class="asn">∞</div><div class="asl">Curiosity</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="sec">
+  <p class="slbl rv">Selected Work</p>
+  <h2 class="stitle rv">Projects</h2>
+  <div class="plist">
+    <a class="pi rv" href="#" style="--pg:linear-gradient(90deg,rgba(108,95,255,.16),transparent)">
+      <div class="pno">01</div>
+      <div><div class="pnm">Arcana</div><div class="pds">AI spiritual guidance — Tarot, Vedic Astrology, Numerology via Gemini</div></div>
+      <div class="ptgs"><span class="tg">Gemini API</span><span class="tg">JS</span><span class="tg">CSS</span></div>
+      <div class="parr">↗</div>
+    </a>
+    <a class="pi rv" href="#" style="--pg:linear-gradient(90deg,rgba(108,95,255,.12),transparent)">
+      <div class="pno">02</div>
+      <div><div class="pnm">Jyotish Cosmos</div><div class="pds">Vedic astrology booking SPA with full funnel, checkout &amp; admin dashboard</div></div>
+      <div class="ptgs"><span class="tg">HTML</span><span class="tg">CSS</span><span class="tg">JS</span></div>
+      <div class="parr">↗</div>
+    </a>
+    <a class="pi rv" href="#" style="--pg:linear-gradient(90deg,rgba(108,95,255,.14),transparent)">
+      <div class="pno">03</div>
+      <div><div class="pnm">LifeOS</div><div class="pds">Full-stack life OS — Firebase, Gemini AI, modular workspace navigation</div></div>
+      <div class="ptgs"><span class="tg">Firebase</span><span class="tg">Gemini</span><span class="tg">JS</span></div>
+      <div class="parr">↗</div>
+    </a>
+    <a class="pi rv" href="#" style="--pg:linear-gradient(90deg,rgba(108,95,255,.10),transparent)">
+      <div class="pno">04</div>
+      <div><div class="pnm">APEX SCALP PRO</div><div class="pds">Pine Script v6 crypto futures scalping indicator for TradingView</div></div>
+      <div class="ptgs"><span class="tg">Pine Script v6</span><span class="tg">TradingView</span></div>
+      <div class="parr">↗</div>
+    </a>
+  </div>
+</section>
+
+<section id="skills" class="sec">
+  <div class="skw">
+    <p class="slbl rv">Stack</p>
+    <h2 class="stitle rv">What I<br>work with</h2>
+    <div class="skgrid">
+      <span class="ski rv">HTML / CSS</span><span class="ski rv">JavaScript</span>
+      <span class="ski rv">Three.js</span><span class="ski rv">GSAP</span>
+      <span class="ski rv">WordPress</span><span class="ski rv">Elementor</span>
+      <span class="ski rv">Python</span><span class="ski rv">Gravity Forms</span>
+      <span class="ski rv">Firebase</span><span class="ski rv">Adobe Illustrator</span>
+      <span class="ski rv">Gemini API</span><span class="ski rv">Pine Script</span>
+      <span class="ski rv">Generative Art</span><span class="ski rv">Adobe Stock</span>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="sec">
+  <div>
+    <p class="slbl rv">Get in Touch</p>
+    <h2 class="stitle rv">Ready to build<br><strong>something great.</strong></h2>
+    <a href="mailto:hello@sam.dev" class="cem rv mag">hello@sam.dev</a>
+    <div class="csoc rv">
+      <a href="#">GitHub</a><a href="#">LinkedIn</a>
+      <a href="#">Dribbble</a><a href="#">Twitter</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Sam.dev</span>
+  <span>Designed &amp; built with passion</span>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ─── CUSTOM CURSOR ─────────────────── */
+const curDot=document.getElementById('cur'),curRing=document.getElementById('curr');
+let cx=0,cy=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;curDot.style.left=cx+'px';curDot.style.top=cy+'px'});
+(function cl(){requestAnimationFrame(cl);rx+=(cx-rx)*.11;ry+=(cy-ry)*.11;curRing.style.left=rx+'px';curRing.style.top=ry+'px'})();
+document.querySelectorAll('a,button,.pi,.ski').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{curDot.style.width='18px';curDot.style.height='18px';curDot.style.background='var(--a2)';curRing.style.transform='translate(-50%,-50%) scale(1.8)'});
+  el.addEventListener('mouseleave',()=>{curDot.style.width='8px';curDot.style.height='8px';curDot.style.background='var(--a1)';curRing.style.transform='translate(-50%,-50%) scale(1)'});
+});
+
+
+
+/* ─── THREE.JS ──────────────────────── */
+const cv=document.getElementById('cv');
+const R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+R.setPixelRatio(Math.min(devicePixelRatio,2));R.setSize(innerWidth,innerHeight);
+const S=new THREE.Scene(),C=new THREE.PerspectiveCamera(52,innerWidth/innerHeight,.1,100);
+C.position.z=6;
+
+S.add(new THREE.AmbientLight(0xffffff,.06));
+const l1=new THREE.PointLight(0x6c5fff,5,26);l1.position.set(5,3,5);S.add(l1);
+const l2=new THREE.PointLight(0x9b91ff,3.5,22);l2.position.set(-4,-3,3);S.add(l2);
+const l3=new THREE.PointLight(0x4a3eff,2.5,20);l3.position.set(0,5,-3);S.add(l3);
+const l4=new THREE.PointLight(0xffffff,1.5,18);l4.position.set(-2,0,6);S.add(l4);
+
+/* ─── DOMAIN WARP SHADER ────────────── */
+const VS=`
+varying vec3 vN;
+varying vec3 vWP;
+varying float vD;
+uniform float uT;
+uniform float uDist;
+
+float hash(vec3 p){p=fract(p*vec3(443.897,397.297,491.187));p+=dot(p,p.yxz+19.19);return fract((p.x+p.y)*p.z);}
+float noise(vec3 p){
+  vec3 i=floor(p),f=fract(p);f=f*f*(3.0-2.0*f);
+  return mix(mix(mix(hash(i),hash(i+vec3(1,0,0)),f.x),mix(hash(i+vec3(0,1,0)),hash(i+vec3(1,1,0)),f.x),f.y),
+             mix(mix(hash(i+vec3(0,0,1)),hash(i+vec3(1,0,1)),f.x),mix(hash(i+vec3(0,1,1)),hash(i+vec3(1,1,1)),f.x),f.y),f.z)*2.0-1.0;
+}
+float fbm(vec3 p){float v=0.0,a=0.5;p*=1.2;for(int i=0;i<5;i++){v+=a*noise(p);a*=0.5;p*=2.02;}return v;}
+
+void main(){
+  vN=normalize(normalMatrix*normal);
+  float t=uT;
+  vec3 q=vec3(fbm(position+t*.11),fbm(position+vec3(5.2,1.3,0)+t*.09),fbm(position+vec3(1.7,9.2,3.4)+t*.08));
+  vec3 r=vec3(fbm(position+3.8*q+vec3(1.7,9.2,0)+t*.07),fbm(position+3.8*q+vec3(8.3,2.8,0)+t*.06),fbm(position+3.8*q+vec3(0,0,5)+t*.05));
+  float d=fbm(position+3.8*r)*uDist;
+  vD=d;
+  vec3 np=position+normal*d;
+  vWP=(modelMatrix*vec4(np,1.0)).xyz;
+  gl_Position=projectionMatrix*modelViewMatrix*vec4(np,1.0);
+}`;
+const FS=`
+varying vec3 vN;
+varying vec3 vWP;
+varying float vD;
+uniform float uT;
+uniform vec3 uCP;
+void main(){
+  vec3 vd=normalize(uCP-vWP);
+  float fr=pow(1.0-clamp(dot(vN,vd),0.0,1.0),2.2);
+  float a=dot(vN,vec3(0,1,0)),b=dot(vN,vec3(1,0,0)),cc=dot(vN,vec3(0,0,1));
+  vec3 c1=vec3(.42,.37,1.),c2=vec3(.61,.57,1.),c3=vec3(.29,.24,1.),c4=vec3(.75,.65,1.),c5=vec3(.20,.15,.60);
+  float t1=sin(a*3.2+uT*.42)*.5+.5,t2=cos(b*2.8+uT*.31)*.5+.5,t3=sin((a+b)*2.4-uT*.37)*.5+.5,t4=cos(cc*3.8+uT*.28)*.5+.5;
+  vec3 ir=mix(c1,c2,t1);ir=mix(ir,c3,t2*.6);ir=mix(ir,c4,t3*.4);ir=mix(ir,c5,t4*.18);
+  vec3 col=mix(vec3(.02,.018,.06),ir,fr*.95+.12);
+  col+=ir*fr*1.0;
+  col+=vec3(.8,.7,1.)*pow(clamp(dot(vN,normalize(vec3(1,1,1))),0.,1.),14.)*.6;
+  col+=c1*pow(1.0-fr,6.)*.22;
+  col+=mix(c3,c2,.5)*max(0.,vD)*.45;
+  gl_FragColor=vec4(col,1.0);
+}`;
+const bMat=new THREE.ShaderMaterial({vertexShader:VS,fragmentShader:FS,uniforms:{uT:{value:0},uDist:{value:.35},uCP:{value:C.position}}});
+const blob=new THREE.Mesh(new THREE.SphereGeometry(1.8,96,96),bMat);
+
+/* Additive glow layers (simulated bloom) */
+function mkG(r,col,op){return new THREE.Mesh(new THREE.SphereGeometry(r,24,24),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:op,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.BackSide}));}
+const glows=[mkG(1.98,0x6c5fff,.07),mkG(2.15,0xff5e9e,.042),mkG(2.5,0x6c5fff,.026),mkG(3.1,0x00e5ff,.016)];
+
+/* Rings */
+function mkR(rad,tube,col,op,rx,ry,rz){const m=new THREE.Mesh(new THREE.TorusGeometry(rad,tube,16,140),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:op}));m.rotation.set(rx,ry,rz);return m;}
+const rings=[
+  mkR(2.65,.007,0x6c5fff,.38,Math.PI/2,0,0),
+  mkR(3.05,.005,0xff5e9e,.22,Math.PI/3,Math.PI/5,0),
+  mkR(3.55,.004,0x00e5ff,.17,Math.PI*.72,0,Math.PI/4),
+  mkR(2.15,.004,0xffffff,.09,Math.PI/6,Math.PI/3,.2),
+  mkR(4.1,.003,0x6c5fff,.1,.4,1.2,.8)
+];
+
+/* ─── INSTANCED PARTICLES ───────────── */
+const PC=340;
+const iPts=new THREE.InstancedMesh(new THREE.OctahedronGeometry(.022,0),new THREE.MeshBasicMaterial({color:0x6c5fff,transparent:true,opacity:.72}),PC);
+iPts.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+const dm=new THREE.Object3D(),pA=new Float32Array(PC),pRd=new Float32Array(PC),pSp=new Float32Array(PC),pTl=new Float32Array(PC);
+for(let i=0;i<PC;i++){pA[i]=Math.random()*Math.PI*2;pRd[i]=3.1+Math.random()*4.4;pSp[i]=(.15+Math.random()*.85)*(Math.random()>.5?1:-1);pTl[i]=(Math.random()-.5)*Math.PI;}
+
+/* Background point cloud */
+const bgN=600,bgP=new Float32Array(bgN*3);
+for(let i=0;i<bgN;i++){bgP[i*3]=(Math.random()-.5)*26;bgP[i*3+1]=(Math.random()-.5)*26;bgP[i*3+2]=(Math.random()-.5)*26;}
+const bgGeo=new THREE.BufferGeometry();bgGeo.setAttribute('position',new THREE.BufferAttribute(bgP,3));
+const bgPts=new THREE.Points(bgGeo,new THREE.PointsMaterial({color:0x6c5fff,size:.016,transparent:true,opacity:.28}));
+
+/* Assemble */
+const obj=new THREE.Group();
+obj.add(blob,...glows,...rings,iPts);
+obj.position.set(2.65,.2,0);
+S.add(obj,bgPts);
+
+/* ─── SCROLL PROXY ──────────────────── */
+const P={px:2.65,py:.2,sc:1.0,cz:6.0};
+let baseRot=0,scrollVel=0,targetScrollVel=0,lastSY=scrollY;
+window.addEventListener('scroll',()=>{
+  const currY=scrollY;
+  targetScrollVel=Math.abs(currY-lastSY)*0.004;
+  lastSY=currY;
+});
+
+const tl2=gsap.timeline({scrollTrigger:{trigger:'body',start:'top top',end:'bottom bottom',scrub:2.2}});
+tl2.to(P,{px:-2.85,py:.1,sc:.95,duration:2},0);
+tl2.to(P,{px:0,py:-.3,sc:.68,duration:2},2);
+tl2.to(P,{px:2.85,py:.25,sc:.78,duration:2},4);
+tl2.to(P,{px:0,py:0,sc:1.2,duration:2},6);
+tl2.to(P,{cz:7.8,duration:8},0);
+
+/* ─── REVEALS ───────────────────────── */
+document.querySelectorAll('.rv').forEach(el=>{
+  gsap.fromTo(el,{opacity:0,y:22},{opacity:1,y:0,duration:1,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 87%',toggleActions:'play none none reverse'}});
+});
+
+/* ─── CHAR SPLIT HERO ───────────────── */
+function splitChars(el){
+  el.innerHTML=[...el.textContent].map(c=>`<span class="ch">${c===' '?'&nbsp;':c}</span>`).join('');
+}
+document.querySelectorAll('.hl1,.hl2').forEach(splitChars);
+setTimeout(()=>{
+  gsap.set('.htitle',{opacity:1});
+  gsap.from('.hl1 .ch',{rotationX:-90,opacity:0,y:55,transformPerspective:900,transformOrigin:'50% 100%',stagger:.04,duration:.88,ease:'power3.out',delay:.2});
+  gsap.from('.hl2 .ch',{rotationX:90,opacity:0,y:-55,transformPerspective:900,transformOrigin:'50% 0%',stagger:.04,duration:.88,ease:'power3.out',delay:.38});
+},80);
+
+/* ─── HERO FADE INS ─────────────────── */
+gsap.to('.badge', {opacity:1,duration:.9,delay:.3,ease:'power2.out'});
+gsap.to('.hdesc', {opacity:1,duration:.9,delay:.95,ease:'power2.out'});
+gsap.to('.hbtns', {opacity:1,duration:.9,delay:1.15,ease:'power2.out'});
+gsap.to('.hstats',{opacity:1,duration:.9,delay:1.3,ease:'power2.out'});
+gsap.to('#sh',    {opacity:1,duration:1, delay:1.8});
+
+/* ─── COUNTER ANIMATION ─────────────── */
+document.querySelectorAll('.sn[data-val]').forEach(el=>{
+  const target=parseInt(el.dataset.val),o={v:0};
+  gsap.to(o,{v:target,duration:2,delay:1.6,ease:'power2.out',onUpdate(){el.textContent=Math.round(o.v);}});
+});
+
+/* ─── MAGNETIC BUTTONS ──────────────── */
+document.querySelectorAll('.mag').forEach(btn=>{
+  btn.addEventListener('mousemove',e=>{
+    const r=btn.getBoundingClientRect();
+    gsap.to(btn,{x:(e.clientX-r.left-r.width/2)*.4,y:(e.clientY-r.top-r.height/2)*.4,duration:.35,ease:'power2.out'});
+  });
+  btn.addEventListener('mouseleave',()=>{
+    gsap.to(btn,{x:0,y:0,duration:.75,ease:'elastic.out(1,.45)'});
+  });
+});
+
+/* ─── MOUSE PARALLAX ────────────────── */
+let mmx=0,mmy=0;
+document.addEventListener('mousemove',e=>{mmx=(e.clientX/innerWidth-.5)*2;mmy=(e.clientY/innerHeight-.5)*2;});
+
+/* ─── RENDER LOOP ───────────────────── */
+const clk=new THREE.Clock();
+(function loop(){
+  requestAnimationFrame(loop);
+  const t=clk.getElapsedTime();
+  baseRot+=.0038;
+
+  // Decay scroll velocity → shader distortion
+  scrollVel+=(targetScrollVel-scrollVel)*0.06;
+  targetScrollVel*=.92;
+  bMat.uniforms.uT.value=t;
+  bMat.uniforms.uDist.value=.32+scrollVel*1.5;
+  bMat.uniforms.uCP.value.copy(C.position);
+
+  // Object transform
+  obj.position.set(P.px,P.py+Math.sin(t*.5)*.1,0);
+  obj.rotation.y=baseRot;
+  obj.rotation.x=Math.sin(t*.28)*.08;
+  const sc=P.sc;obj.scale.set(sc,sc,sc);
+
+  // Ring animations
+  rings[0].rotation.z=t*.155;rings[1].rotation.z=-t*.1;
+  rings[2].rotation.y=t*.082;rings[3].rotation.x=t*.12;rings[4].rotation.z=t*.062;
+
+  // Instanced particles
+  for(let i=0;i<PC;i++){
+    pA[i]+=pSp[i]*.0025;
+    dm.position.set(Math.cos(pA[i])*pRd[i],Math.sin(pA[i]*.65+pTl[i])*pRd[i]*.38,Math.sin(pA[i])*pRd[i]*.55);
+    dm.rotation.x=pA[i]*1.4;dm.rotation.y=pA[i]*.9;
+    dm.updateMatrix();iPts.setMatrixAt(i,dm.matrix);
+  }
+  iPts.instanceMatrix.needsUpdate=true;
+
+  // Pulsing lights
+  l1.intensity=5+Math.sin(t*1.3)*1.1;l2.intensity=3.5+Math.cos(t*1.1)*.85;l3.intensity=2.5+Math.sin(t*.8)*.65;
+
+  // Camera
+  C.position.z=P.cz;
+  C.rotation.x+=(-mmy*.022-C.rotation.x)*.05;
+  C.rotation.y+=(-mmx*.022-C.rotation.y)*.05;
+
+  bgPts.rotation.y=t*.007;
+  R.render(S,C);
+})();
+
+/* ─── SCROLL RESPONSIVE NAV ─────────── */
+const navEl=document.querySelector('nav');
+window.addEventListener('scroll',()=>{
+  if(window.scrollY>50){
+    navEl.classList.add('scrolled');
+  }else{
+    navEl.classList.remove('scrolled');
+  }
+});
+
+/* ── Project Hover Preview System ── */
+const previewEl=document.getElementById('p-preview');
+const previewImg=document.getElementById('p-preview-img');
+const projectScreenshots=[
+  'proj_arcana.png',
+  'proj_jyotish.png',
+  'proj_lifeos.png',
+  'proj_apex.png'
+];
+let activeProject=-1;
+
+const projectItems=document.querySelectorAll('.pi');
+projectItems.forEach((el,idx)=>{
+  el.addEventListener('mouseenter',()=>{
+    activeProject=idx;
+    previewImg.src=projectScreenshots[idx];
+    previewEl.classList.add('visible');
+  });
+  el.addEventListener('mouseleave',()=>{
+    activeProject=-1;
+    previewEl.classList.remove('visible');
+  });
+});
+
+let pX=0,pY=0;
+let targetPX=0,targetPY=0;
+document.addEventListener('mousemove',e=>{
+  targetPX=e.clientX;
+  targetPY=e.clientY;
+});
+
+(function updatePreviewPos(){
+  requestAnimationFrame(updatePreviewPos);
+  let tx=targetPX+35;
+  let ty=targetPY-240;
+  if(tx+360>innerWidth)tx=targetPX-370;
+  if(ty<10)ty=targetPY+30;
+  pX+=(tx-pX)*.12;
+  pY+=(ty-pY)*.12;
+  previewEl.style.left=`${pX}px`;
+  previewEl.style.top=`${pY}px`;
+})();
+
+window.addEventListener('resize',()=>{
+  C.aspect=innerWidth/innerHeight;C.updateProjectionMatrix();
+  R.setSize(innerWidth,innerHeight);
+});
+</script>
+</body>
+</html>
